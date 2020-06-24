@@ -30,6 +30,7 @@ def todoPage(request,pk):
         todoform = TodoForm(pk, request.POST)
         added_by = members.get(user=request.user)
         new_todo_text = todoform.data['todo']
+        # description = todoform.data['description']
         deadline = todoform.data['deadline']
         assigned_to = members.get(pk=todoform.data['assigned_to'])
         new_todo = Todo(todo=new_todo_text, last_modified_by=added_by ,project=project, rank=last_rank+1, last_modified=datetime.now(), deadline=deadline, assigned_to=assigned_to)
@@ -107,13 +108,16 @@ def upTodoRank(request, pk, todo_pk):
     todo = project.todo_set.get(id=todo_pk)
     remaining_todo_set = Todo.objects.filter(project=project)
     if request.method=="GET":
-        for i in remaining_todo_set:
-            if todo.rank-i.rank == 1:
-                i.rank +=1
-                i.save()
-        todo.rank -=1 
-        todo.save()
-        return redirect('/project/' + str(pk) + '/todo/')
+        if todo.rank ==1:
+            return redirect('/project/' + str(pk) + '/todo/'+'#todo')
+        else:
+            for i in remaining_todo_set:
+                if todo.rank - i.rank == 1:
+                    i.rank +=1
+                    i.save()
+            todo.rank -=1 
+            todo.save()
+            return redirect('/project/' + str(pk) + '/todo/'+'#todo')
     context = {
         'project':project, 
         'todo':todo,
@@ -129,13 +133,16 @@ def downTodoRank(request, pk, todo_pk):
     todo = project.todo_set.get(id=todo_pk)
     remaining_todo_set = Todo.objects.filter(project=project)
     if request.method=="GET":
-        for i in remaining_todo_set:
-            if i.rank-todo.rank == 1:
-                i.rank -=1
-                i.save()
-        todo.rank +=1 
-        todo.save()
-        return redirect('/project/' + str(pk) + '/todo/')
+        if todo.rank == len(remaining_todo_set):
+            return redirect('/project/' + str(pk) + '/todo/' +'#todo')
+        else:
+            for i in remaining_todo_set:
+                if i.rank-todo.rank == 1:
+                    i.rank -=1
+                    i.save()
+            todo.rank +=1 
+            todo.save()
+        return redirect('/project/' + str(pk) + '/todo/' +'#todo')
     context = {
         'project':project, 
         'todo':todo,

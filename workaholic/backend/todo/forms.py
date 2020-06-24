@@ -11,12 +11,16 @@ class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
         widgets = {
-            'deadline': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),            
+            'deadline': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),  
         }
         fields = ['todo','assigned_to', 'deadline']
 
     def __init__(self, pk,*args, **kwargs):
         super(TodoForm, self).__init__(*args, **kwargs)
+
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
+
         project = Project.objects.get(id=pk)
         self.fields['deadline'].input_formats = ('%Y-%m-%dT%H:%M',)
         self.fields['assigned_to'].queryset = project.project_members.all()

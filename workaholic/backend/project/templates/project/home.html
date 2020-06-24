@@ -54,10 +54,91 @@
         </div>
     </div>
 </div>
+<!--Memeber-->
+<div class="container my-5 p-4 shadow">
+    <h2 class="display-4 text-center my-4">Member</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Project Members</th>
+                <th>
+                    {% if request.user in admin_users %}
+                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addMembers">Add Member</button>
+                    {% endif %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in members %}
+                {% if i in admin_members %}
+                    <tr>
+                        <td>{{i}} <span class="badge badge-secondary">Admin</span> </td>    
+                        {% if request.user in admin_users %}
+                            {% if i.user != request.user %}
+                                <td>
+                                    <a class="btn btn-warning btn-sm" href="{% url 'removeAdmin' project.pk i.pk %}">Remove Admin</a>
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% else %}
+                <tr>
+                    <td>{{i}}</td> 
+                    <td>
+                        {% if request.user in admin_users %}
+                            <a class="btn btn-info btn-sm" href="{% url 'setAdmin' project.pk i.pk %}">Set Admin</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a>
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="modal" id="addMembers" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Member</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Name</span>
+                        </div>
+                        <input type="text" name="project_member">
+                        <div class="input-group-append">
+                            <input type="submit" value="Submit" class = "btn btn-info btn-sm">
+                        </div>
+                    </div>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="alert alert-warning" role="alert">{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Board-->
 <div class="container shadow my-5 p-4">
     <h2 class="display-4 text-center my-4">Notification</h2>
-    <div class="container bg-light p-4 px-5" style = "height: 250px;">
+    <div class="container bg-light p-4 px-5">
         <p class="display-4 text-center">{{board.body | safe}}</p>
+        <div class="container" style="height: 250px;"></div>
     </div>
 </div>
 
@@ -160,81 +241,4 @@
     </div>
 </div>
 
-<div class="container my-5 p-4 shadow">
-    <h2 class="display-4 text-center my-4">Member</h2>
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Project Members</th>
-                <th>
-                    {% if request.user in admin_users %}
-                        <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#addMembers">Add Member</button>
-                    {% endif %}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in members %}
-                {% if i in admin_members %}
-                    <tr>
-                        <td>{{i}} <span class="badge badge-secondary">Admin</span> </td>    
-                        {% if request.user in admin_users %}
-                            {% if i.user != request.user %}
-                                <td>
-                                    <a class="btn btn-warning btn-sm" href="{% url 'removeAdmin' project.pk i.pk %}">Remove Admin</a>
-                                </td>
-                            {% else %}
-                                <td></td>
-                            {% endif %}
-                        {% endif %}
-                    </tr>
-                {% else %}
-                <tr>
-                    <td>{{i}}</td> 
-                    <td>
-                        {% if request.user in admin_users %}
-                            <a class="btn btn-info btn-sm" href="{% url 'setAdmin' project.pk i.pk %}">Set Admin</a>
-                            <a class="btn btn-danger btn-sm" href="{% url 'deleteMember' project.pk i.pk %}">Delete Member</a>
-                        {% endif %}
-                    </td>
-
-                </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-<div class="modal" id="addMembers" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Member</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Name</span>
-                        </div>
-                        <input type="text" name="project_member">
-                        <div class="input-group-append">
-                            <input type="submit" value="Submit" class = "btn btn-info btn-sm">
-                        </div>
-                    </div>
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="alert alert-warning" role="alert">{{message}}</p>
-                        {% endfor %}
-                    {% endif %}
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
