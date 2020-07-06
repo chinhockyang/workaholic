@@ -5,6 +5,8 @@
             <a 
             {% if 'add_event/' in request.path %}
                 href="{% url 'calendarPage' project.pk 'current_month' %}"
+            {% elif 'search_event/' in request.path %}
+                href="{% url 'calendarPage' project.pk 'current_month' %}"
             {% elif 'edit_event/' in request.path %}
                 href= '/project/{{project.pk}}/calendar/event/{{event.pk}}'
             {% elif 'delete_event/' in request.path %}
@@ -12,6 +14,8 @@
             {% elif 'event/' in request.path %}
                 href="{% url 'calendarPage' project.pk 'current_month' %}"
             {% elif 'edit_todo/' in request.path %}
+                href='/project/{{project.pk}}/todo/'
+            {% elif 'search_todo/' in request.path %}
                 href='/project/{{project.pk}}/todo/'
             {% elif 'delete_todo/' in request.path %}
                 href='/project/{{project.pk}}/todo/'

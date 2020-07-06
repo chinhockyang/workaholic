@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} {{project.name}} | Calendar {% endblock %}
+
+{% block content %}
+
+{% include 'partials/_project_navbar.html' %}
+
+{% for i in events %}
+
+    {{i.title}}<br>
+    {{i.description}}<br>
+    {{i.label}}<br>
+    {{i.start_time}}<br>
+    {{i.end_time}}<br>
+    <br>
+{% endfor %}
+
+{% endblock %}

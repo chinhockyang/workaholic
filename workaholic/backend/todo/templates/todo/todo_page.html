@@ -15,6 +15,37 @@
 {% include 'partials/_project_navbar.html' %}
 
 <div class="container" id="todo">
+    <form action="{% url 'searchTodo' project.pk %}">
+        <label> Keywords</label>
+        <input type="text" name="keywords" class="form-control" placeholder="Type your keywords">
+
+        <label> Assigned to</label>
+        <select name="assigned_to" class="select form-control">
+            <option value="None">None</option>
+            {% for i in members %}
+                <option value={{i.id}}> {{i}}</option>
+            {% endfor %}
+        </select>
+
+        <label> Month</label>
+        <select name="deadline_month" class="select form-control">
+            {% for key, value in month_options.items %}
+                <option value={{value}}> {{key}}</option>
+            {% endfor %}
+        </select>
+
+        <label> Year</label>
+        <input type="number" name="deadline_year" class="form-control" placeholder="Type deadline year">
+
+        <label> Rank</label>
+        <select name="rank" class="select form-control">
+            {% for key, value in rank_options.items %}
+                <option value={{value}}> {{key}}</option>
+            {% endfor %}
+        </select>
+
+        <button class="btn btn-info btn-block my-4" type="submit" >Submit</button>
+    </form>
     <p>
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addTodo">
             Add Todo
