@@ -15,6 +15,8 @@ class Todo(models.Model):
 
     last_modified = models.DateTimeField()
     deadline = models.DateTimeField(null=True, default= datetime.now)
+    deadline_month = models.IntegerField()
+    deadline_year = models.IntegerField()
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 

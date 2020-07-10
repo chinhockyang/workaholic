@@ -10,8 +10,14 @@ class Event(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
+    
     start_time = models.DateTimeField(null=True, blank=True, default= datetime.now)
+    start_month = models.IntegerField()
+    start_year = models.IntegerField()
+
     end_time = models.DateTimeField(null=True, blank=True, default=None)
+    end_month = models.IntegerField()
+    end_year = models.IntegerField()
 
     label = models.CharField(max_length=20, null=True, blank=True)
     todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True)
