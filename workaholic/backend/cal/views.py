@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from .options import label_options, month_options
-
+from django.core.paginator import Paginator #import Paginator
 
 # Create your views here.
 
@@ -250,10 +250,17 @@ def searchEvent(request, pk):
             end_year = int(end_year)
             searched_events = searched_events.filter(end_year=end_year)
 
+    paginator = Paginator(searched_events,6)
+    page = request.GET.get('page')
+    page_events = paginator.get_page(page)
 
     context = {
         'project':project, 
-        'events':searched_events,
+        'events':page_events,
+        'members':members,
+        'label_options':label_options,
+        'month_options':month_options,
+        'previous_options': request.GET, 
         'Year': datetime.now().strftime("%Y")
     }
 

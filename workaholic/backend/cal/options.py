@@ -1,12 +1,12 @@
 label_options = {
-    'None':'None',
+    'Label':'None',
     'Meeting' : 'Meeting',
     'Submission' : 'Submission',
     'Others' : 'Others'
 }
 
 month_options = {
-    'None': 0,
+    'Month': 0,
     'January' : 1,
     'February' : 2,
     'March' : 3,

@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.core.paginator import Paginator #import Paginator
 
 from accounts.models import *
 from cal.models import Event
@@ -267,10 +268,17 @@ def searchTodo(request, pk):
                     break
             searched_todos = new_searched_todos
 
+    paginator = Paginator(searched_todos,6)
+    page = request.GET.get('page')
+    page_todos = paginator.get_page(page)
 
     context = {
         'project':project, 
-        'todos':searched_todos,
+        'members': members,
+        'todos': page_todos,
+        'rank_options': rank_options,
+        'month_options': month_options,
+        'previous_options': request.GET, 
         'Year': datetime.now().strftime("%Y")
     }
 

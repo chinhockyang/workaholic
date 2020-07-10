@@ -1,12 +1,12 @@
 rank_options = {
-    'None': 0,
+    'Rank': 0,
     '5': 5,
     '10':10,
     '20':20
 }
 
 month_options = {
-    'None': 0,
+    'Month': 0,
     'January' : 1,
     'February' : 2,
     'March' : 3,
