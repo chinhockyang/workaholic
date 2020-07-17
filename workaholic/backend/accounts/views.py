@@ -103,6 +103,7 @@ def logoutPage(request):
 def index(request):
     member = Project_Member.objects.get(user= request.user)
     projects = Project.objects.filter(project_members= member).order_by('-last_modified')
+    number_of_projects = len(projects)
 
     project_notification = []
     number_of_notification = 0
@@ -120,20 +121,22 @@ def index(request):
 
         events_start_list = []
         for i in events_start:
-            if i.start_time and i.start_time.date() == datetime.today().date():
+            if i.start_time and i.start_time.date() == datetime.now().date():
                 events_start_list.append(i)
                 number_of_notification += 1
 
         events_end_list = []
         for i in events_end:
-            if i.end_time and i.end_time.date() == datetime.today().date():
+            if i.end_time and i.end_time.date() == datetime.now().date():
                 events_end_list.append(i)
                 number_of_notification += 1
 
         project_notification.append([project, todo_list, events_start_list, events_end_list])
 
+
     context = {
         'projects':projects,
+        'number_of_projects': number_of_projects,
         'project_notification': project_notification,
         'number_of_notification': number_of_notification,
         'Year': datetime.now().strftime("%Y")

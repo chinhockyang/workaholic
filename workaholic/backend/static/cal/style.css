@@ -35,7 +35,7 @@
     font-size: 16px;
     
   }
-  
+
 ul {
     height: 100%;
     padding: 0px 5px 0px 20px;
@@ -54,21 +54,22 @@ ul {
     width: 100%;
   }
 
-  .mon, .tue, .wed, .thu, .fri {
-    background-color:rgb(23, 34, 44);
-    color: white;
-  }
+.mon, .tue, .wed, .thu, .fri {
+  background-color:rgb(23, 34, 44);
+  color: white;
+}
 
-  .sat, .sun {
-    background-color:rgb(122, 39, 6);
-    color: rgb(183, 219, 22);
-  }
+.sat, .sun {
+  background-color:rgb(122, 39, 6);
+  color: rgb(183, 219, 22);
+}
 
-  td:hover {
-    background-color: rgb(216, 212, 212);
-  }
+td:hover {
+  background-color: rgb(216, 212, 212);
+}
 
-  .calendar li {
-    color: indigo;
-    font-size: 15px;
-  }
+
+.calendar li {
+  color: indigo;
+  font-size: 15px;
+}
